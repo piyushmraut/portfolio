@@ -1,13 +1,22 @@
 'use client'
 
-import React, { Suspense, useEffect, useState } from 'react'
-import { Canvas } from '@react-three/fiber'
+import React, { Suspense, useEffect, useState, useRef } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Preload, useGLTF } from '@react-three/drei'
+import * as THREE from 'three'
 import CanvasLoader from '../Loader'
 
 const Computers = ({ isMobile }: { isMobile: boolean }) => {
   const computer = useGLTF('./desktop_pc/scene.gltf', true)
+  const modelRef = useRef<THREE.Group>(null)
   useGLTF.preload('./desktop_pc/scene.gltf')
+
+  useFrame((state, delta) => {
+    if (modelRef.current) {
+      // Gentle rotation around Y axis
+      modelRef.current.rotation.y += delta * 0.3
+    }
+  })
 
   return (
     <mesh>
@@ -22,6 +31,7 @@ const Computers = ({ isMobile }: { isMobile: boolean }) => {
       />
       <pointLight intensity={1.5} />
       <primitive
+        ref={modelRef}
         object={computer.scene}
         scale={isMobile ? 0.7 : 0.75}
         position={isMobile ? [0, -3, -2.2] : [0, -3.25, -1.5]}
@@ -51,13 +61,13 @@ const ComputersCanvas = () => {
 
   return (
     <Canvas
-      frameloop="demand"
+      frameloop="always"
       shadows
       dpr={[1, 2]}
       camera={{ position: [20, 3, 5], fov: 25 }}
       gl={{ 
         preserveDrawingBuffer: true,
-        antialias: false,
+        antialias: true,
         powerPreference: "high-performance"
       }}
       performance={{ min: 0.5 }}
@@ -67,7 +77,8 @@ const ComputersCanvas = () => {
           enableZoom={false}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
-          enableDamping={false}
+          enableDamping={true}
+          dampingFactor={0.05}
         />
         <Computers isMobile={isMobile} />
       </Suspense>

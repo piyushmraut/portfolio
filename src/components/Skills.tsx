@@ -1,16 +1,46 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import { fadeIn } from '@/utils/motion'
 import { 
   FaJava, FaPython, FaHtml5, FaCss3Alt, FaJs,
   FaBootstrap, FaNodeJs, FaReact, FaGitAlt, FaGithub, FaAws,
   FaFigma
 } from 'react-icons/fa'
-import { SiExpress, SiMongodb, SiMysql, SiCanva } from 'react-icons/si'
+import { SiExpress, SiMongodb, SiMysql, SiCanva, SiTailwindcss, SiFirebase } from 'react-icons/si'
 import { VscCode } from 'react-icons/vsc'
 import { GiPublicSpeaker, GiTeamIdea, GiPuzzle, GiThink } from 'react-icons/gi'
+
+type IconColors = {
+  [key: string]: string;
+}
+
+const iconColors: IconColors = {
+  Java: "#007396",
+  Python: "#3776AB",
+  HTML: "#E34F26",
+  CSS: "#1572B6",
+  JavaScript: "#F7DF1E",
+  MySQL: "#4479A1",
+  MongoDB: "#47A248",
+  Firebase: "#FFCA28",
+  Bootstrap: "#7952B3",
+  NodeJS: "#339933",
+  ExpressJS: "#FFFFFF",
+  ReactJS: "#61DAFB",
+  "Tailwind CSS": "#06B6D4",
+  Git: "#F05032",
+  Github: "#FFFFFF",
+  "VS Code": "#007ACC",
+  Figma: "#F24E1E",
+  Canva: "#00C4CC",
+  "AWS Cloud Platform": "#FF9900",
+  Leadership: "#FFD700",
+  "Problem Solving": "#FF6B6B",
+  "Decision Making": "#4CAF50",
+  Collaboration: "#9C27B0"
+}
 
 const skillCategories = [
   {
@@ -28,6 +58,7 @@ const skillCategories = [
     skills: [
       { name: "MySQL", icon: SiMysql },
       { name: "MongoDB", icon: SiMongodb },
+      { name: "Firebase", icon: SiFirebase },
     ],
   },
   {
@@ -37,6 +68,7 @@ const skillCategories = [
       { name: "NodeJS", icon: FaNodeJs },
       { name: "ExpressJS", icon: SiExpress },
       { name: "ReactJS", icon: FaReact },
+      { name: "Tailwind CSS", icon: SiTailwindcss },
     ],
   },
   {
@@ -60,6 +92,43 @@ const skillCategories = [
     ],
   },
 ]
+
+const floatingVariants: Variants = {
+  animate: {
+    y: [-5, 5],
+    transition: {
+      duration: 2,
+      repeat: Infinity,
+      repeatType: "reverse",
+      ease: "easeInOut"
+    }
+  }
+}
+
+const pulseVariants: Variants = {
+  animate: {
+    scale: [1, 1.1, 1],
+    transition: {
+      duration: 2,
+      repeat: Infinity,
+      repeatType: "reverse",
+      ease: "easeInOut"
+    }
+  }
+}
+
+const glowVariants: Variants = {
+  animate: {
+    scale: [1, 1.2, 1],
+    opacity: [0.2, 0.3, 0.2],
+    transition: {
+      duration: 2,
+      repeat: Infinity,
+      repeatType: "reverse",
+      ease: "easeInOut"
+    }
+  }
+}
 
 const Skills = () => {
   return (
@@ -91,30 +160,46 @@ const Skills = () => {
                 <h3 className="text-[#915EFF] font-bold text-[24px] mb-6">
                   {category.title}
                 </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-6">
                   {category.skills.map((skill, skillIndex) => (
                     <motion.div
                       key={skill.name}
-                      variants={fadeIn("up", "spring", 0.3 + skillIndex * 0.1, 0.75)}
+                      variants={{
+                        ...fadeIn("up", "spring", 0.3 + skillIndex * 0.1, 0.75),
+                        ...floatingVariants
+                      }}
+                      initial="initial"
+                      animate="animate"
                       className="flex flex-col items-center gap-2 group"
                     >
-                      <div className="relative">
+                      <motion.div
+                        className="relative"
+                        whileHover={{ scale: 1.2, rotate: 360 }}
+                        transition={{ duration: 0.3 }}
+                      >
                         <motion.div
-                          className="text-4xl text-white group-hover:text-[#915EFF] transition-colors duration-300"
-                          whileHover={{ scale: 1.2 }}
-                          whileTap={{ scale: 0.9 }}
+                          className={`text-4xl transition-colors duration-300`}
+                          style={{ color: iconColors[skill.name] }}
+                          variants={pulseVariants}
+                          initial="initial"
+                          animate="animate"
                         >
                           {React.createElement(skill.icon)}
                         </motion.div>
                         <motion.div
-                          className="absolute -inset-2 bg-[#915EFF] rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"
-                          initial={false}
-                          whileHover={{ scale: 1.4 }}
+                          className="absolute -inset-2 rounded-full opacity-20"
+                          style={{ backgroundColor: iconColors[skill.name] }}
+                          variants={glowVariants}
+                          initial="initial"
+                          animate="animate"
                         />
-                      </div>
-                      <span className="text-secondary text-sm text-center group-hover:text-white transition-colors duration-300">
+                      </motion.div>
+                      <motion.span 
+                        className="text-secondary text-sm text-center group-hover:text-white transition-colors duration-300"
+                        whileHover={{ scale: 1.1 }}
+                      >
                         {skill.name}
-                      </span>
+                      </motion.span>
                     </motion.div>
                   ))}
                 </div>

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { ComputersCanvas } from './canvas/Computers'
+import { TypeAnimation } from 'react-type-animation'
 
 const Hero = () => {
   return (
@@ -23,15 +24,30 @@ const Hero = () => {
           >
             Hi, I&apos;m <span className="text-[#915EFF] glow">Piyush</span>
           </motion.h1>
-          <motion.p 
+          <motion.div 
             className="text-[#dfd9ff] font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] mt-2"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Full Stack Developer & ML Enthusiast <br className="sm:block hidden" />
-            Building innovative web applications
-          </motion.p>
+            <TypeAnimation
+              sequence={[
+                "Full Stack Developer & ML Enthusiast",
+                800,
+                "Building innovative web applications",
+                800,
+                "Turning ideas into reality through code",
+                800,
+                "Passionate about problem-solving",
+                800,
+              ]}
+              wrapper="span"
+              speed={30}
+              style={{ display: 'inline-block' }}
+              repeat={Infinity}
+              cursor={true}
+            />
+          </motion.div>
         </div>
       </div>
 
