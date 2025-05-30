@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { fadeIn } from '@/utils/motion'
-import { TypeAnimation } from 'react-type-animation'
+
 
 const About = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
