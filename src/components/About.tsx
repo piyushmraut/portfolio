@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { fadeIn } from '@/utils/motion'
+import Image from 'next/image'
 
 
 const About = () => {
@@ -35,7 +36,7 @@ const About = () => {
         clearInterval(interval)
       }
     }
-  }, [isHovered])
+  }, [isHovered, nextImage])
 
   return (
     <section className="relative w-full min-h-screen section-gradient pb-8" id="about">
@@ -54,7 +55,7 @@ const About = () => {
               </h2>
 
               <div className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]">
-                I'm a passionate Full Stack Developer and Machine Learning enthusiast with a strong foundation in modern web technologies and artificial intelligence. Currently pursuing my Bachelor's in Computer Engineering, I combine technical expertise with creative problem-solving to build innovative solutions.
+                I&apos;m a passionate Full Stack Developer and Machine Learning enthusiast with a strong foundation in modern web technologies and artificial intelligence. Currently pursuing my Bachelor&apos;s in Computer Engineering, I combine technical expertise with creative problem-solving to build innovative solutions.
               </div>
 
               <div className="mt-8">
@@ -120,11 +121,9 @@ const About = () => {
                       onMouseLeave={() => setIsHovered(false)}
                     >
                       <AnimatePresence mode="wait">
-                        <motion.img
+                        <motion.div
                           key={currentImageIndex}
-                          src={iisfImages[currentImageIndex]}
-                          alt={`IISF Hackathon Image ${currentImageIndex + 1}`}
-                          className="w-full h-full object-cover"
+                          className="relative w-full h-full"
                           initial={{ opacity: 0, scale: 1.1 }}
                           animate={{ 
                             opacity: 1, 
@@ -136,7 +135,15 @@ const About = () => {
                             scale: 1.08,
                             transition: { duration: 0.3, ease: "easeOut" }
                           }}
-                        />
+                        >
+                          <Image
+                            src={iisfImages[currentImageIndex]}
+                            alt={`IISF Hackathon Image ${currentImageIndex + 1}`}
+                            fill
+                            style={{ objectFit: 'cover' }}
+                            priority
+                          />
+                        </motion.div>
                       </AnimatePresence>
                       <motion.div 
                         className="absolute inset-0 flex items-center justify-between px-4 pointer-events-none"
@@ -192,12 +199,16 @@ const About = () => {
                   >
                     <p className="mb-4">Represented Bajaj Institute Of Technology Wardha at the grand finale of the National Smart India Hackathon 2023</p>
                     <div className="w-full h-64 md:h-96 rounded-lg overflow-hidden">
-                      <motion.img
-                        src="https://media.licdn.com/dms/image/v2/D4D22AQE-Zx5M3MCTfg/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1703411030536?e=1751500800&v=beta&t=Itpjiz6hoZVT6CxpVSS52zBBnjNPvVU84ygkmqP2tiE"
-                        alt="Smart India Hackathon"
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                        whileHover={{ scale: 1.05 }}
-                      />
+                      <div className="relative w-full h-full">
+                        <Image
+                          src="https://media.licdn.com/dms/image/v2/D4D22AQE-Zx5M3MCTfg/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1703411030536?e=1751500800&v=beta&t=Itpjiz6hoZVT6CxpVSS52zBBnjNPvVU84ygkmqP2tiE"
+                          alt="Smart India Hackathon"
+                          fill
+                          style={{ objectFit: 'cover' }}
+                          className="hover:scale-105 transition-transform duration-300"
+                          priority
+                        />
+                      </div>
                     </div>
                   </motion.li>
                 </motion.ul>
@@ -222,10 +233,13 @@ const About = () => {
               className="w-full md:w-[300px] h-[300px] rounded-full overflow-hidden border-4 border-[#915EFF] glow relative hover:scale-105 transition-transform duration-300"
             >
               <div className="absolute inset-0 bg-[#915EFF] opacity-10 animate-pulse"></div>
-              <img 
+              <Image 
                 src="https://avatars.githubusercontent.com/u/106990915?v=4"
                 alt="Profile"
-                className="w-full h-full object-cover relative z-10"
+                className="relative z-10"
+                fill
+                style={{ objectFit: 'cover' }}
+                priority
               />
             </motion.div>
           </div>
