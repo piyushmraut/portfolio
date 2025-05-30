@@ -23,8 +23,8 @@ const About = () => {
             variants={fadeIn("up", "spring", 0.2, 0.75)}
             className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
           >
-            I'm a passionate Full Stack Developer and Machine Learning enthusiast with a strong foundation in modern web technologies
-            and artificial intelligence. Currently pursuing my Bachelor's in Computer Engineering, I combine technical expertise with
+            I&apos;m a passionate Full Stack Developer and Machine Learning enthusiast with a strong foundation in modern web technologies
+            and artificial intelligence. Currently pursuing my Bachelor&apos;s in Computer Engineering, I combine technical expertise with
             creative problem-solving to build innovative solutions.
           </motion.p>
 

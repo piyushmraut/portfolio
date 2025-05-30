@@ -1,7 +1,5 @@
 'use client'
 
-import { Canvas } from '@react-three/fiber'
-import { Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { ComputersCanvas } from './canvas/Computers'
 
@@ -23,7 +21,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Hi, I'm <span className="text-[#915EFF] glow">Piyush</span>
+            Hi, I&apos;m <span className="text-[#915EFF] glow">Piyush</span>
           </motion.h1>
           <motion.p 
             className="text-[#dfd9ff] font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] mt-2"

@@ -4,7 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { fadeIn } from '@/utils/motion'
 import { 
-  FaJava, FaPython, FaHtml5, FaCss3Alt, FaJs, FaDatabase,
+  FaJava, FaPython, FaHtml5, FaCss3Alt, FaJs,
   FaBootstrap, FaNodeJs, FaReact, FaGitAlt, FaGithub, FaAws,
   FaFigma
 } from 'react-icons/fa'
