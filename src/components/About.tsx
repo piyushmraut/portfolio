@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { fadeIn } from '@/utils/motion'
 import Image from 'next/image'
@@ -16,20 +16,20 @@ const About = () => {
     "https://media.licdn.com/dms/image/v2/D4D22AQGGfI_kDbnK8g/feedshare-shrink_1280/B4DZPZW1wbHYAk-/0/1734518472499?e=1751500800&v=beta&t=3GxUPEYgP2vlAPqwGQxxuCFoPqspvsKcyPYtWhiCkFI"
   ]
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     setCurrentImageIndex((prev) => (prev + 1) % iisfImages.length)
-  }
+  }, [iisfImages.length])
 
-  const prevImage = () => {
+  const prevImage = useCallback(() => {
     setCurrentImageIndex((prev) => (prev - 1 + iisfImages.length) % iisfImages.length)
-  }
+  }, [iisfImages.length])
 
   useEffect(() => {
     let interval: NodeJS.Timeout
     if (!isHovered) {
       interval = setInterval(() => {
         nextImage()
-      }, 4000) // Changed to 4 seconds
+      }, 4000)
     }
     return () => {
       if (interval) {

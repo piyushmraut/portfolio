@@ -1,12 +1,26 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { fadeIn } from '@/utils/motion'
 import Image from 'next/image'
 import { FaGithub, FaExternalLinkAlt, FaReact } from 'react-icons/fa'
 import { SiTailwindcss, SiGooglecloud, SiFirebase } from 'react-icons/si'
 import { TbApi } from 'react-icons/tb'
+
+interface Tag {
+  name: string
+  color: string
+}
+
+interface Project {
+  name: string
+  description: string
+  tags: Tag[]
+  image: string
+  source_code_link: string
+  live_demo_link?: string
+}
 
 const majorProjects = [
   {
@@ -122,25 +136,16 @@ const miniProjects = [
   }
 ]
 
-const MiniProjectCard = ({ project, index }: { project: any, index: number }) => {
-  const [imageError, setImageError] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(true)
-
-  React.useEffect(() => {
-    console.log('Project image path:', project.image)
-    // Verify image exists by trying to load it
-    const img = document.createElement('img')
-    img.src = project.image
-    img.onload = () => {
-      console.log('Image loaded successfully:', project.image)
-      setIsLoading(false)
-    }
-    img.onerror = () => {
-      console.error('Image failed to load:', project.image)
-      setImageError(true)
-      setIsLoading(false)
-    }
-  }, [project.image])
+const ProjectCard = ({ 
+  index, 
+  name, 
+  description, 
+  tags, 
+  image, 
+  source_code_link, 
+  live_demo_link 
+}: Project & { index: number }) => {
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
 
   return (
     <motion.div
@@ -150,23 +155,24 @@ const MiniProjectCard = ({ project, index }: { project: any, index: number }) =>
       <div className="absolute -inset-0.5 bg-gradient-to-r from-[#915EFF] to-[#F06292] rounded-2xl opacity-50 group-hover:opacity-70 blur-sm transition duration-500"></div>
       <div className="relative rounded-2xl overflow-hidden h-full flex flex-col">
         <div className="relative h-48 w-full overflow-hidden bg-[#1d1836]">
-          {!imageError ? (
+          {!isImageLoaded ? (
+            <div className="w-full h-full flex items-center justify-center text-secondary">
+              <span>Loading image...</span>
+            </div>
+          ) : (
             <Image
-              src={project.image}
-              alt={project.title}
+              src={image}
+              alt={name}
               width={800}
               height={400}
               className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
               priority={index < 3}
               onError={() => {
-                console.error('Image failed to load:', project.image)
-                setImageError(true)
+                console.error('Image failed to load:', image)
+                setIsImageLoaded(false)
               }}
+              onLoad={() => setIsImageLoaded(true)}
             />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-secondary">
-              <span>Image not available</span>
-            </div>
           )}
           <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition duration-500"></div>
         </div>
@@ -188,7 +194,7 @@ const MiniProjectCard = ({ project, index }: { project: any, index: number }) =>
             }}
           >
             <span className="relative">
-              {project.title}
+              {name}
               <motion.span
                 className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-[#915EFF] via-[#F06292] to-[#915EFF]"
                 initial={{ width: "0%" }}
@@ -199,24 +205,24 @@ const MiniProjectCard = ({ project, index }: { project: any, index: number }) =>
           </motion.h3>
           
           <p className="text-secondary text-sm mb-4 flex-1">
-            {project.description}
+            {description}
           </p>
 
           <div className="flex items-center justify-between pb-8 relative">
             {/* Technology Icons */}
             <div className="flex gap-3">
-              {project.technologies.map((tech: any) => (
+              {tags.map((tag) => (
                 <motion.div
-                  key={tech.name}
+                  key={tag.name}
                   className="relative group/tech"
                   whileHover={{ scale: 1.1 }}
                 >
-                  <tech.icon 
+                  <div
                     className="w-5 h-5"
-                    style={{ color: tech.color }}
-                  />
+                    style={{ backgroundColor: tag.color }}
+                  ></div>
                   <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-xs opacity-0 group-hover/tech:opacity-100 transition-opacity whitespace-nowrap z-10">
-                    {tech.name}
+                    {tag.name}
                   </span>
                 </motion.div>
               ))}
@@ -224,21 +230,23 @@ const MiniProjectCard = ({ project, index }: { project: any, index: number }) =>
 
             {/* Project Links */}
             <div className="flex gap-4">
+              {live_demo_link && (
+                <motion.a
+                  href={live_demo_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white hover:text-[#915EFF] transition duration-300 relative group/link"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FaExternalLinkAlt className="w-5 h-5" />
+                  <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-xs opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap z-10">
+                    Live Demo
+                  </span>
+                </motion.a>
+              )}
               <motion.a
-                href={project.liveLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-[#915EFF] transition duration-300 relative group/link"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FaExternalLinkAlt className="w-5 h-5" />
-                <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-xs opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap z-10">
-                  Live Demo
-                </span>
-              </motion.a>
-              <motion.a
-                href={project.githubLink}
+                href={source_code_link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-[#915EFF] transition duration-300 relative group/link"
@@ -259,6 +267,31 @@ const MiniProjectCard = ({ project, index }: { project: any, index: number }) =>
 }
 
 const Projects = () => {
+  const [projects] = useState<Project[]>([
+    {
+      name: "Portfolio Website",
+      description: "A modern 3D portfolio website built with Next.js 14, Three.js, and Framer Motion. Features interactive 3D models, smooth animations, and responsive design.",
+      tags: [
+        {
+          name: "next.js",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "three.js",
+          color: "green-text-gradient",
+        },
+        {
+          name: "tailwind",
+          color: "pink-text-gradient",
+        },
+      ],
+      image: "/portfolio.png",
+      source_code_link: "https://github.com/yourusername/portfolio",
+      live_demo_link: "https://your-portfolio.vercel.app",
+    },
+    // ... other projects
+  ])
+
   return (
     <section className="relative w-full min-h-screen section-gradient" id="projects">
       <div className="max-w-7xl mx-auto flex flex-col gap-5 px-6 py-16">
@@ -385,10 +418,18 @@ const Projects = () => {
           </motion.h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {miniProjects.map((project, index) => (
-              <MiniProjectCard 
+              <ProjectCard 
                 key={project.title} 
-                project={project} 
-                index={index}
+                index={index} 
+                name={project.title} 
+                description={project.description} 
+                tags={project.technologies.map((tech) => ({
+                  name: tech.name,
+                  color: tech.color
+                }))}
+                image={project.image}
+                source_code_link={project.githubLink}
+                live_demo_link={project.liveLink}
               />
             ))}
           </div>
