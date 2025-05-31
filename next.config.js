@@ -15,6 +15,7 @@ const nextConfig = {
         hostname: 'avatars.githubusercontent.com',
       }
     ],
+    unoptimized: true,
   },
   reactStrictMode: true,
   swcMinify: true,

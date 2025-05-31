@@ -50,7 +50,7 @@ const miniProjects = [
   {
     title: "Quiz Application",
     description: "An interactive quiz platform powered by Google's Gemini API for dynamic question generation. Features a competitive leaderboard system and comprehensive analytics dashboard. Users can track their progress and compare scores with others.",
-    image: "/projects/quiz-app.jpg",
+    image: "/projects/quiz-app.jpeg",
     liveLink: "https://quiz-application-nu-ten.vercel.app/",
     githubLink: "https://github.com/piyushmraut/quiz-application",
     technologies: [
@@ -63,7 +63,7 @@ const miniProjects = [
   {
     title: "Bookstore Application",
     description: "A modern bookstore interface integrated with Google Books API. Browse through an extensive collection of books with detailed information. Features an intuitive search system and responsive design for optimal user experience.",
-    image: "/projects/bookstore.jpg",
+    image: "/projects/bookstore.jpeg",
     liveLink: "https://piyush-bookstore-theta.vercel.app/",
     githubLink: "https://github.com/piyushmraut/bookstore",
     technologies: [
@@ -75,7 +75,7 @@ const miniProjects = [
   {
     title: "AI Chatbot",
     description: "An advanced chatbot powered by Google's Gemini API with image generation capabilities using ImagePig. Offers natural language understanding and real-time responses. Features both text-based conversations and AI image generation.",
-    image: "/projects/chatbot.jpg",
+    image: "/projects/chatbot.jpeg",
     liveLink: "https://ai-chatbot-piyush-new.vercel.app/",
     githubLink: "https://github.com/piyushmraut/ai_chatbot_piyush_new",
     technologies: [
@@ -87,7 +87,7 @@ const miniProjects = [
   {
     title: "Employee Management",
     description: "A comprehensive employee management system with CRUD operations. Admins can create and manage employee profiles with detailed information. Features secure authentication, role-based access control, and a user-friendly dashboard for employees.",
-    image: "/projects/employee.jpg",
+    image: "/projects/employee.jpeg",
     liveLink: "https://employee-mangement-six.vercel.app/",
     githubLink: "https://github.com/piyushmraut/Employee-Mangement",
     technologies: [
@@ -99,7 +99,7 @@ const miniProjects = [
   {
     title: "Clock In/Out System",
     description: "An attendance management application with clock in/out functionality. Features a comprehensive dashboard with attendance analytics and upcoming holidays. Includes real-time tracking, attendance history, and detailed reporting.",
-    image: "/projects/clock.jpg",
+    image: "/projects/clock.jpeg",
     liveLink: "https://clock-in-out-keqw.vercel.app/",
     githubLink: "https://github.com/piyushmraut/clock-in-out",
     technologies: [
@@ -111,7 +111,7 @@ const miniProjects = [
   {
     title: "Recipe Finder",
     description: "A culinary companion app powered by the Spoonacular API. Features detailed recipes with step-by-step instructions and comprehensive ingredient information. Includes nutritional facts, cooking times, and serving suggestions.",
-    image: "/projects/recipe.jpg",
+    image: "/projects/recipe.jpeg",
     liveLink: "https://recipe-finder-ten-psi.vercel.app/",
     githubLink: "https://github.com/piyushmraut/Recipe-Finder",
     technologies: [
@@ -123,6 +123,25 @@ const miniProjects = [
 ]
 
 const MiniProjectCard = ({ project, index }: { project: any, index: number }) => {
+  const [imageError, setImageError] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(true)
+
+  React.useEffect(() => {
+    console.log('Project image path:', project.image)
+    // Verify image exists by trying to load it
+    const img = document.createElement('img')
+    img.src = project.image
+    img.onload = () => {
+      console.log('Image loaded successfully:', project.image)
+      setIsLoading(false)
+    }
+    img.onerror = () => {
+      console.error('Image failed to load:', project.image)
+      setImageError(true)
+      setIsLoading(false)
+    }
+  }, [project.image])
+
   return (
     <motion.div
       variants={fadeIn("up", "spring", index * 0.5, 0.75)}
@@ -130,23 +149,54 @@ const MiniProjectCard = ({ project, index }: { project: any, index: number }) =>
     >
       <div className="absolute -inset-0.5 bg-gradient-to-r from-[#915EFF] to-[#F06292] rounded-2xl opacity-50 group-hover:opacity-70 blur-sm transition duration-500"></div>
       <div className="relative rounded-2xl overflow-hidden h-full flex flex-col">
-        <div className="relative h-48 w-full overflow-hidden">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            priority={index < 3}
-            className="object-cover transform group-hover:scale-110 transition duration-500"
-            quality={90}
-          />
+        <div className="relative h-48 w-full overflow-hidden bg-[#1d1836]">
+          {!imageError ? (
+            <Image
+              src={project.image}
+              alt={project.title}
+              width={800}
+              height={400}
+              className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
+              priority={index < 3}
+              onError={() => {
+                console.error('Image failed to load:', project.image)
+                setImageError(true)
+              }}
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-secondary">
+              <span>Image not available</span>
+            </div>
+          )}
           <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition duration-500"></div>
         </div>
         
         <div className="relative bg-[rgba(17,17,23,0.9)] backdrop-blur-xl p-6 flex-1 flex flex-col">
-          <h3 className="text-white font-bold text-xl mb-3 group-hover:text-[#915EFF] transition duration-300">
-            {project.title}
-          </h3>
+          <motion.h3 
+            className="text-transparent bg-clip-text bg-gradient-to-r from-[#915EFF] via-[#F06292] to-[#915EFF] font-bold text-xl mb-3 relative group-hover:bg-[length:400%_400%] transition-all duration-500"
+            style={{
+              backgroundSize: '200% 200%',
+              backgroundPosition: '0% 0%'
+            }}
+            whileHover={{
+              backgroundPosition: ['0% 0%', '100% 100%'],
+              transition: {
+                duration: 1,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }
+            }}
+          >
+            <span className="relative">
+              {project.title}
+              <motion.span
+                className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-[#915EFF] via-[#F06292] to-[#915EFF]"
+                initial={{ width: "0%" }}
+                whileHover={{ width: "100%" }}
+                transition={{ duration: 0.3 }}
+              />
+            </span>
+          </motion.h3>
           
           <p className="text-secondary text-sm mb-4 flex-1">
             {project.description}
@@ -216,9 +266,24 @@ const Projects = () => {
           variants={fadeIn("down", "spring", 0.1, 0.75)}
           className="w-full"
         >
-          <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] glow">
-            Projects
-          </h2>
+          <motion.h2 
+            className="relative font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="relative inline-block">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#915EFF] via-[#F06292] to-[#915EFF] animate-gradient-x font-black">
+                Projects
+              </span>
+              <motion.div
+                className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[#915EFF] via-[#F06292] to-[#915EFF] rounded-full"
+                initial={{ width: "0%", opacity: 0 }}
+                whileInView={{ width: "100%", opacity: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              />
+            </span>
+          </motion.h2>
           <p className="text-secondary text-[17px] max-w-3xl mt-4">
             Here are some of my projects that showcase my skills and experience.
             Each project reflects my ability to solve complex problems, work with different technologies,

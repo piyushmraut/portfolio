@@ -132,8 +132,8 @@ const glowVariants: Variants = {
 
 const Skills = () => {
   return (
-    <section className="relative w-full min-h-screen pt-20 pb-10" id="skills">
-      <div className="max-w-7xl mx-auto flex flex-col items-start gap-5 px-6">
+    <section className="relative w-full min-h-screen pt-16 sm:pt-20 pb-8 sm:pb-10" id="skills">
+      <div className="max-w-7xl mx-auto flex flex-col items-start gap-5 px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={fadeIn("down", "spring", 0.1, 0.75)}
           initial="hidden"
@@ -141,11 +141,26 @@ const Skills = () => {
           viewport={{ once: true }}
           className="w-full"
         >
-          <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mb-10 glow">
-            Skills
-          </h2>
+          <motion.h2 
+            className="relative font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="relative inline-block">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#11998e] via-[#38ef7d] to-[#11998e] animate-gradient-x font-black">
+                Skills
+              </span>
+              <motion.div
+                className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[#11998e] via-[#38ef7d] to-[#11998e] rounded-full"
+                initial={{ width: "0%", opacity: 0 }}
+                whileInView={{ width: "100%", opacity: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              />
+            </span>
+          </motion.h2>
 
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {skillCategories.map((category, index) => (
               <motion.div
                 key={category.title}
@@ -155,12 +170,12 @@ const Skills = () => {
                   0.2 * (index + 1),
                   0.75
                 )}
-                className="card-gradient p-8 rounded-2xl hover:shadow-xl transition-shadow duration-300"
+                className="card-gradient p-4 sm:p-6 lg:p-8 rounded-2xl hover:shadow-xl transition-shadow duration-300"
               >
-                <h3 className="text-[#915EFF] font-bold text-[24px] mb-6">
+                <h3 className="text-[#915EFF] font-bold text-lg sm:text-xl lg:text-[24px] mb-4 sm:mb-6">
                   {category.title}
                 </h3>
-                <div className="grid grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 xxs:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
                   {category.skills.map((skill, skillIndex) => (
                     <motion.div
                       key={skill.name}
@@ -178,7 +193,7 @@ const Skills = () => {
                         transition={{ duration: 0.3 }}
                       >
                         <motion.div
-                          className={`text-4xl transition-colors duration-300`}
+                          className="text-2xl sm:text-3xl lg:text-4xl transition-colors duration-300"
                           style={{ color: iconColors[skill.name] }}
                           variants={pulseVariants}
                           initial="initial"
@@ -195,7 +210,7 @@ const Skills = () => {
                         />
                       </motion.div>
                       <motion.span 
-                        className="text-secondary text-sm text-center group-hover:text-white transition-colors duration-300"
+                        className="text-secondary text-xs sm:text-sm text-center group-hover:text-white transition-colors duration-300"
                         whileHover={{ scale: 1.1 }}
                       >
                         {skill.name}

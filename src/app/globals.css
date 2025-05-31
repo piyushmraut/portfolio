@@ -202,7 +202,7 @@ body {
   }
 }
 
-@keyframes gradient-xy {
+@keyframes gradient-x {
   0% {
     background-position: 0% 50%;
   }
@@ -214,7 +214,27 @@ body {
   }
 }
 
-.animate-gradient-xy {
-  animation: gradient-xy 15s ease infinite;
-  background-size: 400% 400%;
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
+  background-size: 200% 200%;
+}
+
+.gradient-heading {
+  position: relative;
+  display: inline-block;
+}
+
+.gradient-heading::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background: linear-gradient(45deg, #915EFF, #F06292);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: blur(12px);
+  opacity: 0.7;
+  transform: translateY(2px);
 }
