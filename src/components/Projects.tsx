@@ -210,7 +210,7 @@ const ProjectCard = ({
 
           <div className="flex items-center justify-between pb-8 relative">
             {/* Technology Icons */}
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <motion.div
                   key={tag.name}
@@ -218,10 +218,20 @@ const ProjectCard = ({
                   whileHover={{ scale: 1.1 }}
                 >
                   <div
-                    className="w-5 h-5"
-                    style={{ backgroundColor: tag.color }}
-                  ></div>
-                  <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-xs opacity-0 group-hover/tech:opacity-100 transition-opacity whitespace-nowrap z-10">
+                    className="w-8 h-8 rounded-full flex items-center justify-center"
+                    style={{
+                      background: `linear-gradient(135deg, ${tag.color}40, ${tag.color}20)`,
+                      border: `2px solid ${tag.color}`,
+                    }}
+                  >
+                    <span 
+                      className="text-sm font-semibold"
+                      style={{ color: tag.color }}
+                    >
+                      {tag.name.slice(0, 2).toUpperCase()}
+                    </span>
+                  </div>
+                  <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-[10px] opacity-0 group-hover/tech:opacity-100 transition-opacity whitespace-nowrap z-10">
                     {tag.name}
                   </span>
                 </motion.div>
@@ -229,18 +239,18 @@ const ProjectCard = ({
             </div>
 
             {/* Project Links */}
-            <div className="flex gap-4">
+            <div className="flex gap-3">
               {live_demo_link && (
                 <motion.a
                   href={live_demo_link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white hover:text-[#915EFF] transition duration-300 relative group/link"
+                  className="text-white hover:text-[#915EFF] transition duration-300 relative group/link p-2"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <FaExternalLinkAlt className="w-5 h-5" />
-                  <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-xs opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap z-10">
+                  <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-[10px] opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap z-10">
                     Live Demo
                   </span>
                 </motion.a>
@@ -249,13 +259,13 @@ const ProjectCard = ({
                 href={source_code_link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-[#915EFF] transition duration-300 relative group/link"
+                className="text-white hover:text-[#915EFF] transition duration-300 relative group/link p-2"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <FaGithub className="w-5 h-5" />
-                <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-xs opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap z-10">
-                  Source Code
+                <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-[10px] opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap z-10">
+                    Source Code
                 </span>
               </motion.a>
             </div>
@@ -268,8 +278,8 @@ const ProjectCard = ({
 
 const Projects = () => {
   return (
-    <section className="relative w-full min-h-screen section-gradient" id="projects">
-      <div className="max-w-7xl mx-auto flex flex-col gap-5 px-6 py-16">
+    <section className="relative w-full min-h-screen py-16" id="projects">
+      <div className="max-w-7xl mx-auto flex flex-col gap-5">
         <motion.div
           variants={fadeIn("down", "spring", 0.1, 0.75)}
           className="w-full"

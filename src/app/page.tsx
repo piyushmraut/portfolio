@@ -10,16 +10,18 @@ import Contact from '@/components/Contact'
 
 export default function Home() {
   return (
-    <main className="relative z-0">
+    <main className="relative z-0 overflow-hidden">
       <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
         <Hero />
       </div>
-      <About />
-      <Experience />
-      <Projects />
-      <Skills />
-      <div className="relative z-0">
-        <Contact />
+      <div className="px-4 sm:px-6 lg:px-8">
+        <About />
+        <Experience />
+        <Projects />
+        <Skills />
+        <div className="relative z-0">
+          <Contact />
+        </div>
       </div>
     </main>
   )
