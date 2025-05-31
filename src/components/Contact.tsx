@@ -48,8 +48,8 @@ const Contact = () => {
     {
       name: 'LinkedIn',
       icon: FaLinkedin,
-      url: 'https://linkedin.com/in/piyush-raut',
-      color: '#0A66C2',
+      url: 'https://www.linkedin.com/in/piyush-raut-b86942240/',
+      color: '#0077B5',
       hoverColor: '#0077B5'
     },
     {

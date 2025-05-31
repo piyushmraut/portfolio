@@ -4,9 +4,10 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { fadeIn } from '@/utils/motion'
 import Image from 'next/image'
-import { FaGithub, FaExternalLinkAlt, FaReact } from 'react-icons/fa'
-import { SiTailwindcss, SiGooglecloud, SiFirebase } from 'react-icons/si'
+import { FaGithub, FaExternalLinkAlt, FaReact, FaPython } from 'react-icons/fa'
+import { SiTailwindcss, SiGooglecloud, SiFirebase, SiNextdotjs, SiTypescript, SiJavascript } from 'react-icons/si'
 import { TbApi } from 'react-icons/tb'
+import { IconType } from 'react-icons'
 
 interface Tag {
   name: string
@@ -136,6 +137,23 @@ const miniProjects = [
   }
 ]
 
+const getIconComponent = (name: string): IconType => {
+  const iconMap: { [key: string]: IconType } = {
+    'React': FaReact,
+    'next.js': SiNextdotjs,
+    'TailwindCSS': SiTailwindcss,
+    'Firebase': SiFirebase,
+    'Gemini API': SiGooglecloud,
+    'Google Books API': TbApi,
+    'Spoonacular API': TbApi,
+    'Python': FaPython,
+    'TypeScript': SiTypescript,
+    'JavaScript': SiJavascript
+  }
+  
+  return iconMap[name] || TbApi
+}
+
 const ProjectCard = ({ 
   index, 
   name, 
@@ -211,31 +229,32 @@ const ProjectCard = ({
           <div className="flex items-center justify-between pb-8 relative">
             {/* Technology Icons */}
             <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <motion.div
-                  key={tag.name}
-                  className="relative group/tech"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center"
-                    style={{
-                      background: `linear-gradient(135deg, ${tag.color}40, ${tag.color}20)`,
-                      border: `2px solid ${tag.color}`,
-                    }}
+              {tags.map((tag) => {
+                const IconComponent = getIconComponent(tag.name)
+                return (
+                  <motion.div
+                    key={tag.name}
+                    className="relative group/tech"
+                    whileHover={{ scale: 1.1 }}
                   >
-                    <span 
-                      className="text-sm font-semibold"
-                      style={{ color: tag.color }}
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center"
+                      style={{
+                        background: `linear-gradient(135deg, ${tag.color}40, ${tag.color}20)`,
+                        border: `2px solid ${tag.color}`,
+                      }}
                     >
-                      {tag.name.slice(0, 2).toUpperCase()}
+                      <IconComponent 
+                        size={24}
+                        color={tag.color}
+                      />
+                    </div>
+                    <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-[10px] opacity-0 group-hover/tech:opacity-100 transition-opacity whitespace-nowrap z-10">
+                      {tag.name}
                     </span>
-                  </div>
-                  <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-[10px] opacity-0 group-hover/tech:opacity-100 transition-opacity whitespace-nowrap z-10">
-                    {tag.name}
-                  </span>
-                </motion.div>
-              ))}
+                  </motion.div>
+                )
+              })}
             </div>
 
             {/* Project Links */}
