@@ -267,31 +267,6 @@ const ProjectCard = ({
 }
 
 const Projects = () => {
-  const [projects] = useState<Project[]>([
-    {
-      name: "Portfolio Website",
-      description: "A modern 3D portfolio website built with Next.js 14, Three.js, and Framer Motion. Features interactive 3D models, smooth animations, and responsive design.",
-      tags: [
-        {
-          name: "next.js",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "three.js",
-          color: "green-text-gradient",
-        },
-        {
-          name: "tailwind",
-          color: "pink-text-gradient",
-        },
-      ],
-      image: "/portfolio.png",
-      source_code_link: "https://github.com/yourusername/portfolio",
-      live_demo_link: "https://your-portfolio.vercel.app",
-    },
-    // ... other projects
-  ])
-
   return (
     <section className="relative w-full min-h-screen section-gradient" id="projects">
       <div className="max-w-7xl mx-auto flex flex-col gap-5 px-6 py-16">
