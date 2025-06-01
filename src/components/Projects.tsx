@@ -228,7 +228,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4, duration: 0.5 }}
                 >
-                  {technologies.slice(0, 3).map((tech, i) => (
+                  {technologies.slice(0, 3).map((tech) => (
                     <div
                       key={tech.name}
                       className="text-xs px-2 py-1 rounded-full backdrop-blur-sm"

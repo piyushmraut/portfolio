@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 
@@ -9,13 +9,13 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState('')
   const [scrolled, setScrolled] = useState(false)
 
-  const navItems = [
+  const navItems = useMemo(() => [
     { title: 'About', href: '#about' },
     { title: 'Projects', href: '#projects' },
     { title: 'Skills', href: '#skills' },
     { title: 'Experience', href: '#experience' },
     { title: 'Contact', href: '#contact' },
-  ]
+  ], [])
 
   useEffect(() => {
     const handleScroll = () => {
