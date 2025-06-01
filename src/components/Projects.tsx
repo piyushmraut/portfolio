@@ -4,14 +4,21 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { fadeIn } from '@/utils/motion'
 import Image from 'next/image'
-import { FaGithub, FaExternalLinkAlt, FaReact, FaPython } from 'react-icons/fa'
+import { FaGithub, FaExternalLinkAlt, FaReact, FaPython, FaQuestionCircle, FaBook, FaRobot, FaUserTie, FaClock, FaUtensils } from 'react-icons/fa'
 import { SiTailwindcss, SiGooglecloud, SiFirebase, SiNextdotjs, SiTypescript, SiJavascript } from 'react-icons/si'
 import { TbApi } from 'react-icons/tb'
 import { IconType } from 'react-icons'
+import { motion as m, AnimatePresence } from 'framer-motion'
 
 interface Tag {
   name: string
   color: string
+}
+
+interface Technology {
+  name: string;
+  icon: IconType;
+  color: string;
 }
 
 interface Project {
@@ -21,6 +28,25 @@ interface Project {
   image: string
   source_code_link: string
   live_demo_link?: string
+}
+
+interface MiniProject {
+  title: string;
+  description: string;
+  image: string;
+  liveLink: string;
+  githubLink: string;
+  technologies: Technology[];
+}
+
+interface ProjectCardProps {
+  index: number;
+  title: string;
+  description: string;
+  image: string;
+  technologies: Technology[];
+  githubLink: string;
+  liveLink: string;
 }
 
 const majorProjects = [
@@ -61,7 +87,7 @@ const majorProjects = [
   }
 ]
 
-const miniProjects = [
+const miniProjects: MiniProject[] = [
   {
     title: "Quiz Application",
     description: "An interactive quiz platform powered by Google's Gemini API for dynamic question generation. Features a competitive leaderboard system and comprehensive analytics dashboard. Users can track their progress and compare scores with others.",
@@ -154,156 +180,180 @@ const getIconComponent = (name: string): IconType => {
   return iconMap[name] || TbApi
 }
 
-const ProjectCard = ({ 
+const TechIcon: React.FC<{ tech: Technology }> = ({ tech }) => {
+  const Icon = tech.icon;
+  return <Icon size={24} color={tech.color} className="filter drop-shadow-lg" />;
+};
+
+const ProjectCard: React.FC<ProjectCardProps> = ({ 
   index, 
-  name, 
+  title,
   description, 
-  tags, 
-  image, 
-  source_code_link, 
-  live_demo_link 
-}: Project & { index: number }) => {
+  image,
+  technologies,
+  githubLink,
+  liveLink
+}) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false)
 
   return (
-    <motion.div
+    <m.div
       variants={fadeIn("up", "spring", index * 0.5, 0.75)}
       className="relative group h-full"
     >
       <div className="absolute -inset-0.5 bg-gradient-to-r from-[#915EFF] to-[#F06292] rounded-2xl opacity-50 group-hover:opacity-70 blur-sm transition duration-500"></div>
       <div className="relative rounded-2xl overflow-hidden h-full flex flex-col">
-        <div className="relative h-48 w-full overflow-hidden bg-[#1d1836]">
-          {!isImageLoaded ? (
-            <div className="w-full h-full flex items-center justify-center text-secondary">
-              <span>Loading image...</span>
-            </div>
-          ) : (
+        <div className="relative h-48 w-full overflow-hidden">
+          <m.div
+            initial={{ scale: 1.2, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="w-full h-full"
+          >
             <Image
               src={image}
-              alt={name}
+              alt={title}
               width={800}
               height={400}
-              className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
-              priority={index < 3}
-              onError={() => {
-                console.error('Image failed to load:', image)
-                setIsImageLoaded(false)
-              }}
+              className={`w-full h-full object-cover transform transition-transform duration-500 ${
+                isImageLoaded ? 'group-hover:scale-110' : 'opacity-0'
+              }`}
               onLoad={() => setIsImageLoaded(true)}
+              priority={index < 3}
             />
-          )}
-          <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition duration-500"></div>
+            {!isImageLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center bg-[#1d1836]">
+                <div className="w-8 h-8 border-2 border-[#915EFF] border-t-transparent rounded-full animate-spin" />
+              </div>
+            )}
+          </m.div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[rgba(17,17,23,0.5)] to-[rgba(17,17,23,0.95)] transition-opacity duration-500" />
+
+          <m.div
+            className="absolute bottom-0 left-0 right-0 p-4 transform backdrop-blur-sm bg-gradient-to-t from-[rgba(17,17,23,0.95)] via-[rgba(17,17,23,0.8)] to-transparent"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            <div className="flex items-center gap-3">
+              <m.div
+                className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#915EFF]/20 border border-[#915EFF]/30 backdrop-blur-sm flex items-center justify-center"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {technologies.length > 0 && <TechIcon tech={technologies[0]} />}
+              </m.div>
+              <div className="flex-1">
+                <m.h3
+                  className="text-lg font-bold leading-tight bg-gradient-to-r from-[#915EFF] via-[#F06292] to-[#915EFF] bg-clip-text text-transparent"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                >
+                  {title}
+                </m.h3>
+                <m.div
+                  className="flex items-center gap-2 mt-1"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                >
+                  {technologies.slice(0, 3).map((tech, i) => (
+                    <div
+                      key={tech.name}
+                      className="text-xs px-2 py-1 rounded-full backdrop-blur-sm"
+                      style={{
+                        backgroundColor: `${tech.color}20`,
+                        border: `1px solid ${tech.color}40`,
+                        color: tech.color
+                      }}
+                    >
+                      {tech.name}
+                    </div>
+                  ))}
+                  {technologies.length > 3 && (
+                    <span className="text-xs text-white/80">+{technologies.length - 3}</span>
+                  )}
+                </m.div>
+              </div>
+            </div>
+          </m.div>
         </div>
         
         <div className="relative bg-[rgba(17,17,23,0.9)] backdrop-blur-xl p-6 flex-1 flex flex-col">
-          <motion.h3 
-            className="text-transparent bg-clip-text bg-gradient-to-r from-[#915EFF] via-[#F06292] to-[#915EFF] font-bold text-xl mb-3 relative group-hover:bg-[length:400%_400%] transition-all duration-500"
-            style={{
-              backgroundSize: '200% 200%',
-              backgroundPosition: '0% 0%'
-            }}
-            whileHover={{
-              backgroundPosition: ['0% 0%', '100% 100%'],
-              transition: {
-                duration: 1,
-                repeat: Infinity,
-                repeatType: "reverse"
-              }
-            }}
-          >
-            <span className="relative">
-              {name}
-              <motion.span
-                className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-[#915EFF] via-[#F06292] to-[#915EFF]"
-                initial={{ width: "0%" }}
-                whileHover={{ width: "100%" }}
-                transition={{ duration: 0.3 }}
-              />
-            </span>
-          </motion.h3>
-          
           <p className="text-secondary text-sm mb-4 flex-1">
             {description}
           </p>
 
-          <div className="flex items-center justify-between pb-8 relative">
-            {/* Technology Icons */}
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => {
-                const IconComponent = getIconComponent(tag.name)
-                return (
-                  <motion.div
-                    key={tag.name}
-                    className="relative group/tech"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center"
-                      style={{
-                        background: `linear-gradient(135deg, ${tag.color}40, ${tag.color}20)`,
-                        border: `2px solid ${tag.color}`,
-                      }}
-                    >
-                      <IconComponent 
-                        size={24}
-                        color={tag.color}
-                      />
-                    </div>
-                    <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-[10px] opacity-0 group-hover/tech:opacity-100 transition-opacity whitespace-nowrap z-10">
-                      {tag.name}
-                    </span>
-                  </motion.div>
-                )
-              })}
-            </div>
-
-            {/* Project Links */}
-            <div className="flex gap-3">
-              {live_demo_link && (
-                <motion.a
-                  href={live_demo_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white hover:text-[#915EFF] transition duration-300 relative group/link p-2"
+          <div className="flex items-center justify-between pb-4 relative">
+            <div className="flex flex-wrap items-center gap-2">
+              {technologies.map((tech) => (
+                <m.div
+                  key={tech.name}
+                  className="relative group/tech"
                   whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
                 >
-                  <FaExternalLinkAlt className="w-5 h-5" />
-                  <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-[10px] opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap z-10">
-                    Live Demo
-                  </span>
-                </motion.a>
-              )}
-              <motion.a
-                href={source_code_link}
+                  <div
+                    className="w-8 h-8 rounded-full flex items-center justify-center"
+                    style={{
+                      background: `linear-gradient(135deg, ${tech.color}40, ${tech.color}20)`,
+                      border: `2px solid ${tech.color}`,
+                    }}
+                  >
+                    <TechIcon tech={tech} />
+                  </div>
+                </m.div>
+              ))}
+              
+              {/* GitHub and Live Demo Icons */}
+              <div className="h-6 w-[1px] bg-white/20 mx-1" /> {/* Divider */}
+              <m.a
+                href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-[#915EFF] transition duration-300 relative group/link p-2"
+                className="relative group/link"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <FaGithub className="w-5 h-5" />
-                <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-[10px] opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap z-10">
-                    Source Code
+                <div className="w-8 h-8 rounded-full flex items-center justify-center bg-[#915EFF]/20 border border-[#915EFF]/30 hover:bg-[#915EFF]/30 transition-colors duration-300">
+                  <FaGithub size={20} className="text-[#915EFF]" />
+                </div>
+                <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-xs opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap">
+                  Source Code
                 </span>
-              </motion.a>
+              </m.a>
+              <m.a
+                href={liveLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative group/link"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="w-8 h-8 rounded-full flex items-center justify-center bg-[#F06292]/20 border border-[#F06292]/30 hover:bg-[#F06292]/30 transition-colors duration-300">
+                  <FaExternalLinkAlt size={18} className="text-[#F06292]" />
+                </div>
+                <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-xs opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap">
+                  Live Demo
+                </span>
+              </m.a>
             </div>
           </div>
         </div>
       </div>
-    </motion.div>
-  )
-}
+    </m.div>
+  );
+};
 
 const Projects = () => {
   return (
     <section className="relative w-full min-h-screen py-16" id="projects">
       <div className="max-w-7xl mx-auto flex flex-col gap-5">
-        <motion.div
+        <m.div
           variants={fadeIn("down", "spring", 0.1, 0.75)}
           className="w-full"
         >
-          <motion.h2 
+          <m.h2 
             className="relative font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -313,31 +363,31 @@ const Projects = () => {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#915EFF] via-[#F06292] to-[#915EFF] animate-gradient-x font-black">
                 Projects
               </span>
-              <motion.div
+              <m.div
                 className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[#915EFF] via-[#F06292] to-[#915EFF] rounded-full"
                 initial={{ width: "0%", opacity: 0 }}
                 whileInView={{ width: "100%", opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
               />
             </span>
-          </motion.h2>
+          </m.h2>
           <p className="text-secondary text-[17px] max-w-3xl mt-4">
             Here are some of my projects that showcase my skills and experience.
             Each project reflects my ability to solve complex problems, work with different technologies,
             and manage projects effectively.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="mt-12">
-          <motion.h3
+          <m.h3
             variants={fadeIn("right", "spring", 0.2, 0.75)}
             className="text-white font-bold text-[30px] mb-8 glow"
           >
             Major Projects
-          </motion.h3>
+          </m.h3>
           <div className="space-y-12">
             {majorProjects.map((project, index) => (
-              <motion.div
+              <m.div
                 key={project.title}
                 variants={fadeIn(index % 2 === 0 ? "right" : "left", "spring", 0.2 * (index + 1), 0.75)}
                 className="card-gradient p-8 rounded-2xl"
@@ -348,10 +398,9 @@ const Projects = () => {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-4 mt-4">
-                  {/* Technology Icons */}
                   <div className="flex gap-3 flex-1">
                     {project.tech.map((tech) => (
-                      <motion.div
+                      <m.div
                         key={tech.name}
                         className="relative group/tech"
                         whileHover={{ scale: 1.1 }}
@@ -363,13 +412,12 @@ const Projects = () => {
                         <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-xs opacity-0 group-hover/tech:opacity-100 transition-opacity whitespace-nowrap">
                           {tech.name}
                         </span>
-                      </motion.div>
+                      </m.div>
                     ))}
                   </div>
 
-                  {/* Project Links */}
                   <div className="flex items-center gap-4">
-                    <motion.a
+                    <m.a
                       href={project.liveLink}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -381,8 +429,8 @@ const Projects = () => {
                       <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-xs opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap">
                         Live Demo
                       </span>
-                    </motion.a>
-                    <motion.a
+                    </m.a>
+                    <m.a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -394,46 +442,43 @@ const Projects = () => {
                       <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgba(17,17,23,0.9)] text-white px-2 py-1 rounded text-xs opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap">
                         Source Code
                       </span>
-                    </motion.a>
+                    </m.a>
                   </div>
                 </div>
 
                 <p className="mt-4 text-secondary text-[17px]">{project.description}</p>
                 <ul className="mt-4 text-secondary text-[17px] space-y-4">
                   {project.points.map((point, i) => (
-                    <motion.li
+                    <m.li
                       key={i}
                       variants={fadeIn("up", "spring", 0.3 + i * 0.1, 0.75)}
                       className="pl-4 relative before:content-['•'] before:absolute before:left-0 before:text-[#915EFF]"
                     >
                       {point}
-                    </motion.li>
+                    </m.li>
                   ))}
                 </ul>
-              </motion.div>
+              </m.div>
             ))}
           </div>
 
-          <motion.h3
+          <m.h3
             variants={fadeIn("right", "spring", 0.2, 0.75)}
             className="text-white font-bold text-[30px] my-16 glow"
           >
             Mini Projects
-          </motion.h3>
+          </m.h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {miniProjects.map((project, index) => (
               <ProjectCard 
                 key={project.title} 
                 index={index} 
-                name={project.title} 
+                title={project.title}
                 description={project.description} 
-                tags={project.technologies.map((tech) => ({
-                  name: tech.name,
-                  color: tech.color
-                }))}
                 image={project.image}
-                source_code_link={project.githubLink}
-                live_demo_link={project.liveLink}
+                technologies={project.technologies}
+                githubLink={project.githubLink}
+                liveLink={project.liveLink}
               />
             ))}
           </div>

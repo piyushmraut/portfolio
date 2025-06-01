@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ParticlesBackground from "@/components/ParticlesBackground";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         <div className="fixed inset-0 z-0 bg-[radial-gradient(circle_at_center,_rgba(145,94,255,0.1)_0%,_transparent_70%)]" />
         <div className="fixed inset-0 z-0 bg-[radial-gradient(circle_at_center,_rgba(240,98,146,0.05)_0%,_transparent_70%)] rotate-180" />
         <div className="relative z-10">
+          <Navbar />
           {children}
         </div>
       </body>
