@@ -21,14 +21,14 @@ interface Technology {
   color: string;
 }
 
-interface Project {
-  name: string
-  description: string
-  tags: Tag[]
-  image: string
-  source_code_link: string
-  live_demo_link?: string
-}
+// interface Project {
+//   name: string
+//   description: string
+//   tags: Tag[]
+//   image: string
+//   source_code_link: string
+//   live_demo_link?: string
+// }
 
 interface MiniProject {
   title: string;
@@ -163,22 +163,6 @@ const miniProjects: MiniProject[] = [
   }
 ]
 
-const getIconComponent = (name: string): IconType => {
-  const iconMap: { [key: string]: IconType } = {
-    'React': FaReact,
-    'next.js': SiNextdotjs,
-    'TailwindCSS': SiTailwindcss,
-    'Firebase': SiFirebase,
-    'Gemini API': SiGooglecloud,
-    'Google Books API': TbApi,
-    'Spoonacular API': TbApi,
-    'Python': FaPython,
-    'TypeScript': SiTypescript,
-    'JavaScript': SiJavascript
-  }
-  
-  return iconMap[name] || TbApi
-}
 
 const TechIcon: React.FC<{ tech: Technology }> = ({ tech }) => {
   const Icon = tech.icon;

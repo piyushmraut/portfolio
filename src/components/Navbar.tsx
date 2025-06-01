@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Link from 'next/link'
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
