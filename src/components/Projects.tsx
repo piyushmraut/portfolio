@@ -1,14 +1,14 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+
 import { fadeIn } from '@/utils/motion'
 import Image from 'next/image'
-import { FaGithub, FaExternalLinkAlt, FaReact, FaPython, FaQuestionCircle, FaBook, FaRobot, FaUserTie, FaClock, FaUtensils } from 'react-icons/fa'
+import { FaGithub, FaExternalLinkAlt, FaReact, FaPython} from 'react-icons/fa'
 import { SiTailwindcss, SiGooglecloud, SiFirebase, SiNextdotjs, SiTypescript, SiJavascript } from 'react-icons/si'
 import { TbApi } from 'react-icons/tb'
 import { IconType } from 'react-icons'
-import { motion as m, AnimatePresence } from 'framer-motion'
+import { motion as m} from 'framer-motion'
 
 interface Tag {
   name: string
