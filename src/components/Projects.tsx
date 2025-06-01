@@ -4,31 +4,17 @@ import React, { useState } from 'react'
 
 import { fadeIn } from '@/utils/motion'
 import Image from 'next/image'
-import { FaGithub, FaExternalLinkAlt, FaReact, FaPython} from 'react-icons/fa'
-import { SiTailwindcss, SiGooglecloud, SiFirebase, SiNextdotjs, SiTypescript, SiJavascript } from 'react-icons/si'
+import { FaGithub, FaExternalLinkAlt, FaReact } from 'react-icons/fa'
+import { SiTailwindcss, SiGooglecloud, SiFirebase } from 'react-icons/si'
 import { TbApi } from 'react-icons/tb'
 import { IconType } from 'react-icons'
 import { motion as m} from 'framer-motion'
-
-interface Tag {
-  name: string
-  color: string
-}
 
 interface Technology {
   name: string;
   icon: IconType;
   color: string;
 }
-
-// interface Project {
-//   name: string
-//   description: string
-//   tags: Tag[]
-//   image: string
-//   source_code_link: string
-//   live_demo_link?: string
-// }
 
 interface MiniProject {
   title: string;
@@ -432,10 +418,10 @@ const Projects = () => {
 
                 <p className="mt-4 text-secondary text-[17px]">{project.description}</p>
                 <ul className="mt-4 text-secondary text-[17px] space-y-4">
-                  {project.points.map((point, i) => (
+                  {project.points.map((point, _) => (
                     <m.li
-                      key={i}
-                      variants={fadeIn("up", "spring", 0.3 + i * 0.1, 0.75)}
+                      key={_}
+                      variants={fadeIn("up", "spring", 0.3 + _ * 0.1, 0.75)}
                       className="pl-4 relative before:content-['•'] before:absolute before:left-0 before:text-[#915EFF]"
                     >
                       {point}
