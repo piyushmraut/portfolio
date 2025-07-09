@@ -11,9 +11,9 @@ const About = () => {
   const [isHovered, setIsHovered] = useState(false)
   
   const iisfImages = [
-    "https://media.licdn.com/dms/image/v2/D4D22AQHp8R74lT890w/feedshare-shrink_1280/B4DZPZW1whGgAo-/0/1734518476074?e=1751500800&v=beta&t=QKRm67f0rgV39Z8QM5dHqIvRjzv4kNZyJfffbriIDCs",
-    "https://media.licdn.com/dms/image/v2/D4D22AQEtjQWDeqFKUg/feedshare-shrink_2048_1536/B4DZPZW1xOGoAo-/0/1734518474047?e=1751500800&v=beta&t=G0bdNzQauR94WY2eTGtasYQn8wbd2lbHQLqX7m0kUyc",
-    "https://media.licdn.com/dms/image/v2/D4D22AQGGfI_kDbnK8g/feedshare-shrink_1280/B4DZPZW1wbHYAk-/0/1734518472499?e=1751500800&v=beta&t=3GxUPEYgP2vlAPqwGQxxuCFoPqspvsKcyPYtWhiCkFI"
+    "https://media.licdn.com/dms/image/v2/D4D22AQHp8R74lT890w/feedshare-shrink_1280/B4DZPZW1whGgAo-/0/1734518476074?e=1755129600&v=beta&t=t4d2JLsZtF_vFFVXe4DWfDJ4TA_maFtIjL0sJBPZkrc",
+    "https://media.licdn.com/dms/image/v2/D4D22AQEtjQWDeqFKUg/feedshare-shrink_2048_1536/B4DZPZW1xOGoAo-/0/1734518474047?e=1755129600&v=beta&t=3MB_RNu_t6_2-SddvN-ICU4PK80p_bSWM3z8H4TMqn4",
+    "https://media.licdn.com/dms/image/v2/D4D22AQGGfI_kDbnK8g/feedshare-shrink_1280/B4DZPZW1wbHYAk-/0/1734518472499?e=1755129600&v=beta&t=FLDI_cikD8ebtBB9xLdG7UebVDKOC9_gQQHCVg1p29g"
   ]
 
   const nextImage = useCallback(() => {
@@ -305,7 +305,7 @@ const About = () => {
                     <div className="w-full h-64 md:h-96 rounded-lg overflow-hidden">
                       <div className="relative w-full h-full">
                         <Image
-                          src="https://media.licdn.com/dms/image/v2/D4D22AQE-Zx5M3MCTfg/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1703411030536?e=1751500800&v=beta&t=Itpjiz6hoZVT6CxpVSS52zBBnjNPvVU84ygkmqP2tiE"
+                          src="https://media.licdn.com/dms/image/v2/D4D22AQE-Zx5M3MCTfg/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1703411030536?e=1755129600&v=beta&t=Img00VglTCpApPvYZ_z2GMOHO1ZYXAVSsMGWYQzJsgY"
                           alt="Smart India Hackathon"
                           fill
                           style={{ objectFit: 'cover' }}
