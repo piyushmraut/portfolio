@@ -165,8 +165,8 @@ const Experience = () => {
                 >
                   {[
                     "Architected and deployed 15+ responsive web applications using React.js, Firebase, and Tailwind CSS, achieving 25% UI performance improvement and 40% faster data loading.",
-                    "Led cross-functional collaboration with 5-member team, maintaining 90% on-time delivery rate through agile sprint planning and proactive issue resolutionEarned certifications in Networking Essentials and Introduction to Packet Tracer, demonstrating foundational knowledge in network architecture, configuration, and diagnostics.",
-                    "Delivered production-ready code within first week, demonstrating rapid adaptability and contributing to 20% increase in team productivity, tested, and optimized network configurations using Cisco Packet Tracer, gaining proficiency in realistic network simulation and troubleshooting scenarios.",
+                    "Led cross-functional collaboration with 5-member team, maintaining 90% on-time delivery rate through agile sprint planning and proactive issue resolution.",
+                    "Delivered production-ready code within first week, demonstrating rapid adaptability and contributing to 20% increase in team productivity.",
                     "Implemented scalable database solutions reducing query response time by 35%."
                   ].map((point, index) => (
                     <motion.li
