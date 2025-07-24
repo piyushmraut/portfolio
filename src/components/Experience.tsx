@@ -148,7 +148,7 @@ const Experience = () => {
                       transition={{ duration: 0.5 }}
                       className="text-[#915EFF] font-bold text-lg sm:text-xl lg:text-[24px] group-hover:text-white transition-colors duration-300"
                     >
-                      Networking Virtual Internship
+                      SOFTWARE DEVELOPER INTERN
                     </motion.h3>
                     <motion.p 
                       initial={{ opacity: 0, x: -20 }}
@@ -156,7 +156,7 @@ const Experience = () => {
                       transition={{ duration: 0.5, delay: 0.1 }}
                       className="text-white font-semibold mt-1 sm:mt-2 text-sm sm:text-base"
                     >
-                      Cisco | Jun 2023 – Jul 2023
+                      Qloron Private Limited | Feb 2025 – Jul 2025
                     </motion.p>
                   </div>
                 </div>
@@ -164,9 +164,10 @@ const Experience = () => {
                   className="mt-4 sm:mt-6 text-secondary text-sm sm:text-base lg:text-[17px] list-none space-y-3 sm:space-y-4"
                 >
                   {[
-                    "Participated in hands-on exercises and simulations, developing practical skills in configuring and troubleshooting Cisco networking devices and technologies.",
-                    "Earned certifications in Networking Essentials and Introduction to Packet Tracer, demonstrating foundational knowledge in network architecture, configuration, and diagnostics.",
-                    "Built, tested, and optimized network configurations using Cisco Packet Tracer, gaining proficiency in realistic network simulation and troubleshooting scenarios."
+                    "Architected and deployed 15+ responsive web applications using React.js, Firebase, and Tailwind CSS, achieving 25% UI performance improvement and 40% faster data loading.",
+                    "Led cross-functional collaboration with 5-member team, maintaining 90% on-time delivery rate through agile sprint planning and proactive issue resolutionEarned certifications in Networking Essentials and Introduction to Packet Tracer, demonstrating foundational knowledge in network architecture, configuration, and diagnostics.",
+                    "Delivered production-ready code within first week, demonstrating rapid adaptability and contributing to 20% increase in team productivity, tested, and optimized network configurations using Cisco Packet Tracer, gaining proficiency in realistic network simulation and troubleshooting scenarios.",
+                    "Implemented scalable database solutions reducing query response time by 35%."
                   ].map((point, index) => (
                     <motion.li
                       key={index}
